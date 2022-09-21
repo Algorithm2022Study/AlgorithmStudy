@@ -1,7 +1,8 @@
 # 블로그 풀이 링크
 # https://squidward-tentac1es.tistory.com/78
 
-# 데크: 앞, 뒤 양쪽 방향에서 엘리먼트(element)를 추가하거나 제거, 행과 가장자리 열 관리에 사용할 것
+# 데크: 앞, 뒤 양쪽 방향에서 엘리먼트(element)를 추가하거나 제거
+# 행과 가장자리 열 관리에 사용할 것
 from collections import deque
 
 
