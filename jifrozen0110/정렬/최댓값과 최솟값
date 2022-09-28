@@ -1,0 +1,24 @@
+
+import java.util.*;
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        StringTokenizer st=new StringTokenizer(s);
+
+        int max=(int)-1e9;
+        int min=(int)1e9;
+       while(st.hasMoreTokens()){
+            int n=Integer.parseInt(st.nextToken());
+            if(max<n){
+                max=n;
+            }
+            if(min>n){
+                min=n;
+            }
+        }
+
+        answer=min+" "+max;
+
+        return answer;
+    }
+}
