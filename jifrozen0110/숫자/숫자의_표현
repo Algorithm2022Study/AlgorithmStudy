@@ -1,0 +1,17 @@
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        int sum=1;
+        int start=1;
+
+        for(int i=2;i<n;i++){
+            sum+=i;
+            while(sum>n){
+                sum-=start;
+                start++;
+            }
+            if(sum==n) answer++;
+        }
+        return answer+1;
+    }
+}
