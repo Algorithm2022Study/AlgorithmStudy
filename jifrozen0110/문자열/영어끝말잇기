@@ -1,0 +1,32 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int n, String[] words) {
+        int[] answer = new int[2];
+
+
+        ArrayList<String> arr=new ArrayList<String>();
+        int cnt=1;
+        arr.add(words[0]);
+        for(int i=1;i<words.length;i++){
+            String now=words[i];
+            cnt++;
+            char last=words[i-1].charAt(words[i-1].length()-1);
+            char first=now.charAt(0);
+            if(arr.contains(now)||last!=first){
+                if(cnt%n==0){
+                    answer[0]=n;
+                    answer[1]=cnt/n;
+                }else{
+                    answer[0]=cnt%n;
+                    answer[1]=cnt/n+1;
+                }
+                break;
+            }
+            arr.add(words[i]);
+
+        }
+
+        return answer;
+
+    }
+}
