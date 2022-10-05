@@ -1,0 +1,22 @@
+import java.util.*;
+
+class Solution {
+    boolean solution(String s) {
+        boolean answer = true;
+
+        int isLeft=0;
+        for(char c:s.toCharArray()){
+            if(c=='(') isLeft+=1;
+            else{
+                if(isLeft==0) {answer=false; break; }
+                isLeft-=1;
+            }
+        }
+
+        if(isLeft!=0){
+            answer=false;
+        }
+
+        return answer;
+    }
+}
