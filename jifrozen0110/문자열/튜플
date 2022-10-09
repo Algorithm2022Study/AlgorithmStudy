@@ -1,0 +1,34 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(String s) {
+
+        ArrayList<Integer> arr=new ArrayList<Integer>();
+
+        s=s.replace("{{","").replace("}}","").replace("},{","-");
+
+        String[] strs=s.split("-");
+
+        Arrays.sort(strs,new Comparator<String>(){
+            public int compare(String o1,String o2){
+                return Integer.compare(o1.length(),o2.length());
+            }
+        });
+
+        for(String str:strs){
+            String[] strArr=str.split(",");
+            for(int i=0;i<strArr.length;i++){
+                int sr=Integer.parseInt(strArr[i]);
+                if(!arr.contains(sr)){
+                    arr.add(sr);
+                }
+            }
+        }
+        int[] answer = new int[arr.size()];
+        for(int i=0;i<arr.size();i++){
+           answer[i]=arr.get(i);
+       }
+
+        return answer;
+    }
+}
