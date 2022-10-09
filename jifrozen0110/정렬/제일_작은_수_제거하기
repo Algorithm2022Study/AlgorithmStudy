@@ -1,0 +1,29 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int[] arr) {
+        int[] answer=new int[1];
+        if(arr.length==1){
+            answer[0]=-1;
+            return answer;
+        }
+
+        ArrayList<Integer> ar=new ArrayList<>();
+        int min=(int)1e9;
+        int minIndex=0;
+        for(int i=0;i<arr.length;i++){
+            ar.add(arr[i]);
+            if(arr[i]<min){
+                min=arr[i];
+                minIndex=i;
+            }
+        }
+
+        ar.remove(minIndex);
+        answer = new int[ar.size()];
+        for(int i=0;i<ar.size();i++){
+            answer[i]=ar.get(i);
+        }
+
+        return answer;
+    }
+}
