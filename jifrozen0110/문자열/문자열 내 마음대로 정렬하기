@@ -1,0 +1,20 @@
+import java.util.*;
+class Solution {
+    public String[] solution(String[] strings, int n) {
+
+        ArrayList<String> arr=new ArrayList<String>();
+        for(String str:strings){
+            arr.add(str);
+        }
+
+        Collections.sort(arr,(String str1,String str2)->{
+            if(str1.charAt(n)-str2.charAt(n)==0){ return str1.compareTo(str2);}
+            return str1.charAt(n)-str2.charAt(n);
+        });
+        String[] answer = new String[arr.size()];
+        for(int i=0;i<arr.size();i++){
+            answer[i]=arr.get(i);
+        }
+        return answer;
+    }
+}
