@@ -1,0 +1,16 @@
+class Solution {
+    public String solution(String s, int n) {
+        String answer = "";
+        for(char c:s.toCharArray()){
+            if(c>=65&&c<=90){
+                if(c+n>90){c-=26;}
+            }
+            if(c>=97&&c<=122){
+                if(c+n>122){c-=26;}
+            }
+            if(c==' ') c-=n;
+            answer+=(char)(c+n);
+        }
+        return answer;
+    }
+}
