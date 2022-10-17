@@ -1,0 +1,21 @@
+class Solution {
+    public String solution(String s) {
+        String answer = "";
+        int index=0;
+        for(char c:s.toCharArray()){
+            if(c==' '){
+                index=0;
+            }
+            else if(index%2==0){
+                c=Character.toUpperCase(c);
+                index++;
+            }else{
+                c=Character.toLowerCase(c);
+                index++;
+            }
+            answer+=c;
+        }
+
+        return answer;
+    }
+}

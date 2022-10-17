@@ -1,0 +1,16 @@
+class Solution {
+    public String solution(int n) {
+        String answer = "";
+
+        int sub=n/2;
+        int d=n%2;
+        while(sub-->0){
+            answer+="수박";
+        }
+        if(d==1){
+            answer+="수";
+        }
+
+        return answer;
+    }
+}
