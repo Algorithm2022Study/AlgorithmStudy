@@ -1,28 +1,29 @@
-def dfs(depth, idx):
-    global min_diff
-    if depth == n//2:
-        power1, power2 = 0, 0
-        for i in range(n):
-            for j in range(n):
-                if visited[i] and visited[j]:
-                    power1 += graph[i][j]
-                elif not visited[i] and not visited[j]:
-                    power2 += graph[i][j]
-        min_diff = min(min_diff, abs(power1-power2))
-        return
+from itertools import combinations
+from itertools import permutations
+import sys
 
-    for i in range(idx, n):
-        if not visited[i]:
-            visited[i] = True
-            dfs(depth+1, i+1)
-            visited[i] = False
-
+input = sys.stdin.readline
 
 n = int(input())
 
-visited = [False for _ in range(n)]
-graph = [list(map(int, input().split())) for _ in range(n)]
-min_diff = int(1e9)
+arr = [i for i in range(n)]
+comb = list(combinations(arr, n // 2))
+players = []
 
-dfs(0, 0)
-print(min_diff)
+for i in range(n):
+    players.append(list(map(int, input().split())))
+
+ans = 2000
+
+for x in range(len(comb) // 2):  # 절반까지만
+    start, link = 0, 0  # start,link의 저장할 변수
+
+    for a, b in list(permutations(comb[x], 2)):  # permuatation을 이용, 다 더함
+        start += players[a][b]
+
+    for a, b in list(permutations(list(set(arr) - set(comb[x])), 2)):
+        link += players[a][b]
+
+    ans = min(abs(start - link), ans)  # 절댓값 붙여 최솟값 구하기
+
+print(ans)
