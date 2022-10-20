@@ -1,19 +1,11 @@
-# 내일 다시 풀고 블로그 업로드
+N = int(input())
+li = [list(map(int, input().split())) for _ in range(N)]
+dp = [0 for _ in range(N + 1)]
 
-# 퇴사 DP
-n = int(input())
-T, P = [0 for i in range(n+1)], [0 for i in range(n+1)]
-for i in range(n):
-    a,b = map(int, input().split())
-    T[i] = a
-    P[i] = b
+for i in range(N - 1, -1, -1):
+    if i + li[i][0] > N:
+        dp[i] = dp[i + 1]
+    else:
+        dp[i] = max(dp[i + 1], li[i][1] + dp[i + li[i][0]])  # 바로 전단계 DB vs 현재 i 값 + (현재 일자 + 소요 일자) > 이 인덱스의 최대값, 가장 전값에 현재값 더하는게 아니라, 소요 일자를 넣어서 계산해야함
 
-# dp[i]는 i번째날까지 일을 했을 때, 최대값이다.
-dp =[0 for i in range(n+1)]
-
-for i in range(len(T)-2, -1, -1):      # 역순으로 진행
-    if T[i]+i <= n:       # 날짜를 초과하지 않을 경우.
-        dp[i] = max(P[i] + dp[i + T[i]], dp[i+1])
-    else:                 # 날짜를 초과할 경우.
-        dp[i] = dp[i+1]
 print(dp[0])
