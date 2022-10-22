@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution {
+    public int solution(int[] nums) {
+        int answer = 0;
+
+        int totalLen=nums.length;
+        HashSet<Integer> set=new HashSet<>();
+        for(int i=0;i<totalLen;i++){
+            set.add(nums[i]);
+        }
+
+        int setSize=set.size();
+        if(totalLen/2<setSize){
+            answer=totalLen/2;
+        }else{
+            answer=setSize;
+        }
+
+        return answer;
+    }
+}
