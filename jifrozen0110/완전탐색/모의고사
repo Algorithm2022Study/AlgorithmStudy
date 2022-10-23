@@ -1,0 +1,34 @@
+import java.util.*;
+class Solution {
+    public int[] solution(int[] answers) {
+        int[] pick1={1,2,3,4,5};
+        int[] pick2={2,1,2,3,2,4,2,5};
+        int[] pick3={3,3,1,1,2,2,4,4,5,5};
+
+        Integer[] right={0,0,0};
+
+        for(int i=0;i<answers.length;i++){
+            if(answers[i]==pick1[i%5]) right[0]+=1;
+            if(answers[i]==pick2[i%8]) right[1]+=1;
+            if(answers[i]==pick3[i%10]) right[2]+=1;
+        }
+
+        int max=Math.max(right[0],Math.max(right[1],right[2]));
+
+        ArrayList<Integer> arr=new ArrayList<Integer>();
+
+        for(int i=0;i<3;i++){
+            if(max==right[i]){
+                arr.add(i+1);
+            }
+        }
+
+        int[] answer=new int[arr.size()];
+        for(int i=0;i<arr.size();i++){
+            answer[i]=arr.get(i);
+        }
+
+        Arrays.sort(answer);
+        return answer;
+    }
+}
