@@ -1,0 +1,108 @@
+import java.util.*;
+class Solution {
+    static class Car{
+        String carNum;
+        int m;
+        Car(String carNum,int m){
+            this.carNum=carNum;
+            this.m=m;
+        }
+    }
+    static class Node{
+        int totalTime;
+        String InTime;
+        String OutTime;
+        boolean check;
+        Node(String InTime){
+            this.totalTime=0;
+            this.InTime=InTime;
+            this.check=false;
+        }
+        public boolean getCheck(){
+            return check;
+        }
+
+        public int getTotalTime(){
+            return this.totalTime;
+        }
+
+        public void setOut(String OutTime){
+            this.OutTime=OutTime;
+            this.check=true;
+            this.calTime();
+        }
+        public void setIn(String InTime){
+            this.InTime=InTime;
+            this.check=false;
+        }
+
+        public void calTime(){
+            StringTokenizer st=new StringTokenizer(this.InTime,":");
+            int h=Integer.parseInt(st.nextToken());
+            int m=Integer.parseInt(st.nextToken());
+            st=new StringTokenizer(this.OutTime,":");
+            int oh=Integer.parseInt(st.nextToken());
+            int om=Integer.parseInt(st.nextToken());
+            this.totalTime+=(60-m)+(oh-h-1)*60+om;
+
+        }
+
+        // public int calMoney(){
+        //     if(this.totalTime<=basicTime){
+        //         return basicMoney;
+        //     }else{
+        //         return basic+(totalTime-basicTime)/time*money;
+        //     }
+        // }
+
+    }
+    public int[] solution(int[] fees, String[] records) {
+        int basicTime=fees[0];
+        int basicMoney=fees[1];
+        int time=fees[2];
+        int money=fees[3];
+
+        HashMap<String,Node> map=new HashMap<>();
+
+        for(String str:records){
+            StringTokenizer st=new StringTokenizer(str);
+            String cartime=st.nextToken();
+            String carNum=st.nextToken();
+            String InOrOut=st.nextToken();
+            if(InOrOut.equals("IN")){
+                if(map.containsKey(carNum)){
+                    Node node=map.get(carNum);
+                    node.setIn(cartime);
+                    map.put(carNum,node);
+                }else{
+                    map.put(carNum,new Node(cartime));
+                }
+            }else{
+                Node node=map.get(carNum);
+                node.setOut(cartime);
+            }
+        }
+        Comparator<String> comparator = (s1, s2) -> s1.compareTo(s2);
+        Map<String, Integer> tree = new TreeMap<>(comparator);
+        for(String str:map.keySet()){
+            Node node=map.get(str);
+            if(!node.getCheck()){
+                node.setOut("23:59");
+            }
+            int t=node.getTotalTime();
+            if(t<=basicTime){
+                tree.put(str,basicMoney);
+            }else{
+                tree.put(str,basicMoney+(t-basicTime)/time*money+(((t-basicTime)%time>0)?money:0));
+            }
+        }
+
+        int[] answer=new int[tree.size()];
+        int i=0;
+        for (Map.Entry<String, Integer> entry : tree.entrySet()) {
+            answer[i]=entry.getValue();
+            i++;
+        }
+        return answer;
+    }
+}
