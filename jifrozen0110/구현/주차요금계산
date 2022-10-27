@@ -44,17 +44,7 @@ class Solution {
             int oh=Integer.parseInt(st.nextToken());
             int om=Integer.parseInt(st.nextToken());
             this.totalTime+=(60-m)+(oh-h-1)*60+om;
-
         }
-
-        // public int calMoney(){
-        //     if(this.totalTime<=basicTime){
-        //         return basicMoney;
-        //     }else{
-        //         return basic+(totalTime-basicTime)/time*money;
-        //     }
-        // }
-
     }
     public int[] solution(int[] fees, String[] records) {
         int basicTime=fees[0];
@@ -62,7 +52,7 @@ class Solution {
         int time=fees[2];
         int money=fees[3];
 
-        HashMap<String,Node> map=new HashMap<>();
+        TreeMap<String,Node> map=new TreeMap<>();
 
         for(String str:records){
             StringTokenizer st=new StringTokenizer(str);
@@ -82,8 +72,8 @@ class Solution {
                 node.setOut(cartime);
             }
         }
-        Comparator<String> comparator = (s1, s2) -> s1.compareTo(s2);
-        Map<String, Integer> tree = new TreeMap<>(comparator);
+        int[] answer=new int[map.size()];
+        int i=0;
         for(String str:map.keySet()){
             Node node=map.get(str);
             if(!node.getCheck()){
@@ -91,18 +81,13 @@ class Solution {
             }
             int t=node.getTotalTime();
             if(t<=basicTime){
-                tree.put(str,basicMoney);
+                answer[i]=basicMoney;
             }else{
-                tree.put(str,basicMoney+(t-basicTime)/time*money+(((t-basicTime)%time>0)?money:0));
+                answer[i]=basicMoney+(t-basicTime)/time*money+(((t-basicTime)%time>0)?money:0);
             }
-        }
-
-        int[] answer=new int[tree.size()];
-        int i=0;
-        for (Map.Entry<String, Integer> entry : tree.entrySet()) {
-            answer[i]=entry.getValue();
             i++;
         }
+
         return answer;
     }
 }
