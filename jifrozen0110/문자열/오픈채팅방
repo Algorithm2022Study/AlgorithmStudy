@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Solution {
+    public String[] solution(String[] record) {
+
+        ArrayList<String> arr=new ArrayList<>();
+        HashMap<String,String> map=new HashMap<>();
+        for(String r:record){
+            String[] recordInfo=r.split(" ");
+            String first=recordInfo[0];
+            String userId=recordInfo[1];
+            String nickname="";
+            StringBuilder sb=new StringBuilder();
+            sb.append(userId+"/");
+            switch(first){
+                case "Enter":
+                    nickname=recordInfo[2];
+                    map.put(userId,nickname);
+                    sb.append("님이 들어왔습니다.");
+                    arr.add(sb.toString());
+                    break;
+                case "Leave":
+                    sb.append("님이 나갔습니다.");
+                    arr.add(sb.toString());
+                    break;
+                case "Change":
+                    nickname=recordInfo[2];
+                    map.put(userId,nickname);
+                    break;
+            }
+
+        }
+        String[] answer = new String[arr.size()];
+        for(int i=0;i<arr.size();i++){
+            String str=map.get(arr.get(i).split("/")[0]);
+            answer[i]=str+arr.get(i).split("/")[1];
+        }
+        return answer;
+    }
+}
