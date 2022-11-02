@@ -1,0 +1,32 @@
+import java.util.*;
+class Solution {
+    public int[] solution(String msg) {
+        char[] c=msg.toCharArray();
+        HashMap<String,Integer> map=new HashMap<>();
+        //알파벳 집어넣기
+        for(char ch='A';ch<='Z';ch++){
+            map.put(String.valueOf(ch),ch-64);
+        }
+        int index=26;
+        ArrayList<Integer> arr=new ArrayList<>();
+        for(int i=0;i<c.length;i++){
+            String w=c[i]+"";
+            int a=1;
+            while(i+a<=c.length&&map.containsKey(msg.substring(i,i+a))){
+                a++;
+            }
+
+            if(a+i>c.length) {arr.add(map.get(msg.substring(i))); break;}
+            map.put(msg.substring(i,i+a),++index);
+            arr.add(map.get(msg.substring(i,i+a-1)));
+            if(a>1) i=i+a-2;
+        }
+        int[] answer=new int[arr.size()];
+
+        for(int i=0;i<arr.size();i++){
+            answer[i]=arr.get(i);
+        }
+
+        return answer;
+    }
+}
