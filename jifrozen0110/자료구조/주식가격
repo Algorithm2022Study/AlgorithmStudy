@@ -1,0 +1,37 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] prices) {
+        int[] answer = new int[prices.length];
+        Queue<Integer> q=new LinkedList<>();
+
+        for(int i=0;i<prices.length;i++){
+            q.offer(prices[i]);
+        }
+
+        ArrayList<Integer> arr=new ArrayList<>();
+
+        while(!q.isEmpty()){
+            int n=q.poll();
+            int time=0;
+            if(q.isEmpty()){
+                arr.add(0); break;
+            }
+            Iterator<Integer> iter=q.iterator();
+            while(iter.hasNext()){
+                int now=iter.next();
+                if(n>now){
+                    time++;
+                    break;
+                }
+                time++;
+            }
+            arr.add(time);
+        }
+
+        for(int i=0;i<arr.size();i++){
+            answer[i]=arr.get(i);
+        }
+        return answer;
+    }
+}
