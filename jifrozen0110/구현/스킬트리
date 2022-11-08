@@ -1,0 +1,27 @@
+import java.util.*;
+class Solution {
+    public int solution(String skill, String[] skill_trees) {
+        int answer = 0;
+        ArrayList<Character> arr=new ArrayList<>();
+        for(char c:skill.toCharArray()){
+                arr.add(c);
+            }
+        for(String tree:skill_trees){
+            boolean skillRight=true;
+            int index=0;
+            for(char c:tree.toCharArray()){
+                if(arr.contains(c)){
+                    if(arr.get(index)!=c){
+                        skillRight=false;
+                    }else{
+                        index++;
+                    }
+                }
+            }
+            if(skillRight){
+                answer++;
+            }
+        }
+        return answer;
+    }
+}
