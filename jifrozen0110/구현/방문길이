@@ -1,0 +1,43 @@
+import java.util.*;
+class Solution {
+    static int[][][] visited=new int[11][11][4];
+    static int[][] map=new int[11][11];
+    static int[] dx={0,0,1,-1};
+    static int[] dy={1,-1,0,0};
+    static int startX=5,startY=5;
+    static int answer = 0;
+    public int solution(String dirs) {
+        for(char c:dirs.toCharArray()){
+            move(c);
+        }
+        return answer;
+    }
+    public void move(char c){
+        int index=-1;
+        switch (c){
+            case 'U':
+                index=0;
+                break;
+            case 'D':
+                index=1;
+                break;
+            case 'R':
+                index=2;
+                break;
+            case 'L':
+                index=3;
+                break;
+        }
+        int nx=startX+dx[index];
+        int ny=startY+dy[index];
+        if(nx<0||ny<0||nx>=11||ny>=11) return;
+        if(visited[startX][startY][index]==0){
+                visited[startX][startY][index]=1;
+                answer++;
+                index=(index%2==0)?index+1:index-1;
+                visited[nx][ny][index]=1;
+            }
+        startX=nx;
+        startY=ny;
+    }
+}
