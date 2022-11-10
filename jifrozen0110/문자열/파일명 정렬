@@ -1,0 +1,72 @@
+
+import java.util.*;
+class Solution {
+    class Node implements Comparable<Node>{
+        String head;
+        String number;
+        String tail;
+        public Node(String head,String number,String tail){
+            this.head=head;
+            this.number=number;
+            this.tail=tail;
+        }
+
+        @Override
+        public String toString(){
+            return this.head+this.number+this.tail;
+        }
+
+        @Override
+        public int compareTo(Node other){
+            String str1=this.head.toLowerCase();
+            String str2=other.head.toLowerCase();
+            int headSort=str1.compareTo(str2);
+            if(headSort==0){
+                int num1=Integer.parseInt(this.number);
+                int num2=Integer.parseInt(other.number);
+                return Integer.compare(num1,num2);
+            }else{
+                return headSort;
+            }
+
+        }
+
+    }
+    public String[] solution(String[] files) {
+
+        ArrayList<Node> arr=new ArrayList<>();
+        for(String file:files){
+            String head="";
+            int index=0;
+            String number="";
+            String tail="";
+            for(;index<file.length();index++){
+                char c=file.charAt(index);
+                if(c>='0'&&c<='9'){
+                    break;
+                }
+                head+=c;
+            }
+            for(;index<file.length();index++){
+                char c=file.charAt(index);
+                if(c<'0'||c>'9'){
+                    break;
+                }
+                number+=c;
+            }
+            for(;index<file.length();index++){
+                char c=file.charAt(index);
+                tail+=c;
+            }
+            Node node=new Node(head,number,tail);
+            arr.add(node);
+        }
+        Collections.sort(arr);
+        String[] answer = new String[arr.size()];
+        for(int i=0;i<arr.size();i++){
+            answer[i]=arr.get(i).toString();
+        }
+
+        return answer;
+    }
+}
