@@ -1,0 +1,22 @@
+import java.util.*;
+class Solution {
+    public long[] solution(long[] numbers) {
+        long[] answer = new long[numbers.length];
+        for(int j=0;j<numbers.length;j++){
+            if(numbers[j]%2==0){
+                answer[j]=numbers[j]+1;
+            }else{
+                String origin=Long.toBinaryString(numbers[j]);
+                int zeroIndex=origin.lastIndexOf("0");
+                if(zeroIndex!=-1){
+                    String newNum=origin.substring(0,zeroIndex)+"10"+origin.substring(zeroIndex+2,origin.length());
+                    answer[j]=Long.parseLong(newNum,2);
+                }else{
+                    String newNum="10"+origin.substring(1,origin.length());
+                    answer[j]=Long.parseLong(newNum,2);
+                }
+            }
+        }
+        return answer;
+    }
+}
