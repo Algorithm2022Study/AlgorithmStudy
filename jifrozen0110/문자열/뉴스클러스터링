@@ -1,0 +1,48 @@
+import java.util.*;
+class Solution {
+    public int solution(String str1, String str2) {
+        double answer = 0;
+
+        ArrayList<String> union=new ArrayList<>();
+        ArrayList<String> intersection=new ArrayList<>();
+        ArrayList<String> arr1=new ArrayList<>();
+        ArrayList<String> arr2=new ArrayList<>();
+
+        for(int i=0;i<str1.length()-1;i++){
+            String now=str1.substring(i,i+2);
+            now=now.toLowerCase();
+            if(now.charAt(0)<'a'||now.charAt(0)>'z'||now.charAt(1)<'a'||now.charAt(1)>'z') continue;
+            arr1.add(now);
+        }
+
+        for(int i=0;i<str2.length()-1;i++){
+            String now=str2.substring(i,i+2);
+            now=now.toLowerCase();
+            if(now.charAt(0)<'a'||now.charAt(0)>'z'||now.charAt(1)<'a'||now.charAt(1)>'z') continue;
+            arr2.add(now);
+        }
+
+        double jacade=0.0;
+
+        Collections.sort(arr1);
+        Collections.sort(arr2);
+
+        for(String s:arr1){
+            if(arr2.remove(s)) intersection.add(s);
+            union.add(s);
+        }
+
+        for(String s:arr2){
+            union.add(s);
+        }
+        if(union.size()==0){
+            jacade=1.0;
+        }else{
+            jacade=(double)intersection.size()/(double)union.size();
+        }
+
+        answer=jacade*65536;
+
+        return (int)answer;
+    }
+}

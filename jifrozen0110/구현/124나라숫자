@@ -1,0 +1,21 @@
+import java.util.*;
+class Solution {
+    public String solution(int n) {
+        String answer = "";
+        String[] num={"4","1","2"};
+        int remain=n%3;
+        Stack<String> stack=new Stack<>();
+        while(n>0){
+            remain=n%3;
+            stack.push(num[remain]);
+            if(remain==0) n--;
+            n=n/3;
+        }
+
+        while(!stack.isEmpty()){
+            answer+=stack.pop();
+        }
+
+        return answer;
+    }
+}

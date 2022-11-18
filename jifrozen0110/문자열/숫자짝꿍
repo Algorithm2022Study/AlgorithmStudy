@@ -1,0 +1,28 @@
+import java.util.*;
+class Solution {
+    public String solution(String X, String Y) {
+        StringBuilder answer = new StringBuilder();
+        int[] number=new int[10];
+        ArrayList<Character> arr=new ArrayList<>();
+        for(char ch:X.toCharArray()){
+            number[ch-'0']++;
+        }
+        for(Character ch:Y.toCharArray()){
+            if(number[ch-'0']>0){
+                arr.add(ch);
+                number[ch-'0']--;
+            }
+        }
+
+        if(arr.size()==0) return "-1";
+        Collections.sort(arr,Collections.reverseOrder());
+
+        for(int i=0;i<arr.size();i++){
+            answer.append(arr.get(i));
+        }
+
+        if(answer.charAt(0)=='0') return "0";
+
+        return answer.toString();
+    }
+}
