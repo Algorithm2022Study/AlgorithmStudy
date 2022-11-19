@@ -1,4 +1,3 @@
-# 그리디
 def solution(name):
     answer = 0
 
@@ -10,7 +9,7 @@ def solution(name):
         next = i + 1
         while next < len(name) and name[next] == 'A':
             next += 1
-        min_move = min([min_move, 2 * i + len(name) - next, i + 2 * len(name)])
+        min_move = min([min_move, 2 * i + len(name) - next, i + 2 * (len(name) - next)])
 
     answer += min_move
 
