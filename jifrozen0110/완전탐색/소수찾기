@@ -1,0 +1,37 @@
+import java.util.*;
+class Solution {
+    static int[] list=new int[10000001];
+    static int cnt=0;
+    static HashSet<Integer> set=new HashSet<>();
+    public static void permutation(String numbers,String output,int depth,boolean[] visited){
+        if(output!=""){
+            int number=Integer.parseInt(output);
+            if(isPrime(number)) set.add(number);
+        }
+        if(depth==numbers.length()) return;
+        for(int i=0;i<numbers.length();i++){
+            if(!visited[i]){
+                visited[i]=true;
+                permutation(numbers,output+numbers.charAt(i),depth+1,visited);
+                visited[i]=false;
+            }
+        }
+    }
+    public static boolean isPrime(int n){
+        if(n==1||n==0) return false;
+        for(int i=2;i<=Math.sqrt(n);i++){
+            if(n%i==0) return false;
+        }
+        return true;
+    }
+    public int solution(String numbers) {
+        int answer = 0;
+        list[0]=1;
+        list[1]=1;
+        boolean[] visited=new boolean[numbers.length()];
+        permutation(numbers,"",0,visited);
+
+
+        return set.size();
+    }
+}
