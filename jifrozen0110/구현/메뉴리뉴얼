@@ -1,0 +1,54 @@
+import java.util.*;
+class Solution {
+    static HashMap<String,Integer> map;
+    static int[] visited;
+    public static void combi(String str,StringBuilder combiStr,int index,int depth,int n){
+        if(depth==n){
+            map.put(combiStr.toString(),map.getOrDefault(combiStr.toString(),0)+1);
+            return;
+        }
+        for(int i=index;i<str.length();i++){
+            combiStr.append(str.charAt(i));
+            combi(str,combiStr,i+1,depth+1,n);
+            combiStr.delete(depth,depth+1);
+        }
+    }
+    public String[] solution(String[] orders, int[] course) {
+        ArrayList<String> arr=new ArrayList<>();
+        for(int i=0;i<orders.length;i++){
+            char[] ch=orders[i].toCharArray();
+            Arrays.sort(ch);
+            orders[i]=String.valueOf(ch);
+        }
+
+        for(int i=0;i<course.length;i++){
+            map=new HashMap<>();
+            for(int j=0;j<orders.length;j++){
+                StringBuilder sb=new StringBuilder();
+                if(course[i]<=orders[j].length()){
+                    combi(orders[j],sb,0,0,course[i]);
+                }
+            }
+            int max=0;
+
+            for(Map.Entry<String,Integer> entry:map.entrySet()){
+                max=Math.max(max,entry.getValue());
+            }
+
+            for(Map.Entry<String,Integer> entry:map.entrySet()){
+                if(max>1&&entry.getValue()==max){
+                    arr.add(entry.getKey());
+                }
+            }
+
+        }
+
+        Collections.sort(arr);
+
+        String[] answer = new String[arr.size()];
+        for(int i=0;i<arr.size();i++){
+            answer[i]=arr.get(i);
+        }
+        return answer;
+    }
+}
