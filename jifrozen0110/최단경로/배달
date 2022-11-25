@@ -1,0 +1,65 @@
+import java.util.*;
+class Solution {
+    static int[][] map;
+    static int INF=(int)1e9;
+    static int[] d=new int[51];
+    static class Node implements Comparable<Node>{
+        int index;
+        int distance;
+        Node(int index,int distance){
+            this.index=index;
+            this.distance=distance;
+        }
+
+        @Override
+        public int compareTo(Node other){
+            if(this.distance<other.distance){
+                return -1;
+            }
+            return 1;
+        }
+    }
+    public static void dijkstra(int start){
+        d[start]=0;
+        PriorityQueue<Node> pq=new PriorityQueue<>();
+        pq.offer(new Node(start,0));
+        while(!pq.isEmpty()){
+            Node node=pq.poll();
+            int now=node.index;
+            int dst=node.distance;
+            if(d[now]<dst) continue;
+            for(int i=1;i<map.length;i++){
+                if(map[now][i]>=INF) continue;
+                int cost=d[now]+map[now][i];
+                if(cost<d[i]){
+                    d[i]=cost;
+                    pq.offer(new Node(i,cost));
+                }
+            }
+        }
+    }
+    public int solution(int N, int[][] road, int K) {
+        int answer = 0;
+        Arrays.fill(d,INF);
+        map=new int[N+1][N+1];
+        for(int i=0;i<N+1;i++){
+            Arrays.fill(map[i],INF);
+        }
+
+        for(int i=0;i<road.length;i++){
+            if(map[road[i][0]][road[i][1]]>road[i][2]){
+                map[road[i][0]][road[i][1]]=road[i][2];
+                map[road[i][1]][road[i][0]]=road[i][2];
+            }
+        }
+
+        dijkstra(1);
+
+        for(int i=1;i<N+1;i++){
+            if(d[i]<=K) answer++;
+        }
+
+
+        return answer;
+    }
+}

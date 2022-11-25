@@ -1,0 +1,71 @@
+
+import java.util.*;
+class Solution {
+    static int[] dx={0,1,0,-1};
+    static int[] dy={1,0,-1,0};
+    static boolean[][] removed;
+    static char[][] map;
+    public int solution(int m, int n, String[] board) {
+        int answer = 0;
+        int x=0,y=0;
+
+        map=new char[m][n];
+        for(int i=0;i<m;i++){
+            map[i]=board[i].toCharArray();
+        }
+        boolean flag=true;
+        while(flag){
+            removed=new boolean[m][n];
+            for(int i=0;i<m-1;i++){
+                for(int j=0;j<n-1;j++){
+                    if(map[i][j]=='#') continue;
+
+                    if(check(i,j)){
+
+                        removed[i][j]=true;
+                        removed[i+1][j]=true;
+                        removed[i][j+1]=true;
+                        removed[i+1][j+1]=true;
+                    }
+
+                }
+            }
+            int cnt=mapRemove(m,n);
+            if(cnt==0) break;
+            answer+=cnt;
+            }
+        return answer;
+    }
+    static boolean check(int x,int y){
+        char c=map[x][y];
+        if(map[x][y+1]==c&&map[x+1][y+1]==c&&map[x+1][y]==c) return true;
+        return false;
+    }
+    static int mapRemove(int m,int n){
+        boolean remove=false;
+        int cnt=0;
+        for(int i=0;i<m;i++){
+                for(int j=0;j<n;j++){
+                    if(removed[i][j]){
+                        cnt++;
+                        map[i][j]='#';
+                    }
+                }
+             }
+        for(int i=0;i<n;i++){
+            Queue<Character> q=new LinkedList<>();
+            for(int j=m-1;j>=0;j--){
+                if(map[j][i]!='#') q.offer(map[j][i]);
+            }
+            int index=m-1;
+            while(!q.isEmpty()){
+                map[index--][i]=q.poll();
+            }
+            for(int j=index;j>=0;j--){
+                map[j][i]='#';
+            }
+        }
+        return cnt;
+
+    }
+}
