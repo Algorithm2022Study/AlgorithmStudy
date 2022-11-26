@@ -1,0 +1,52 @@
+import java.util.*;
+class Solution {
+    static char[][] op={{'*','-','+'},{'*','+','-'},{'+','*','-'},{'+','-','*'},{'-','+','*'},{'-','*','+'}};
+    static long max=0;
+    public long solution(String expression) {
+        for(int i=0;i<6;i++){
+            calc(i,expression);
+        }
+        return max;
+    }
+
+    public void calc(int calcIndex,String expression){
+        StringBuilder num=new StringBuilder();
+        ArrayList<Long> number=new ArrayList<>();
+        ArrayList<Character> opList=new ArrayList<>();
+            for(char c:expression.toCharArray()){
+                if(c=='-'||c=='+'||c=='*'){
+                    opList.add(c);
+                    number.add(Long.parseLong(num.toString()));
+                    num=new StringBuilder();
+                }else{
+                    num.append(c);
+                }
+            }
+            number.add(Long.parseLong(num.toString()));
+
+        for(int i=0;i<3;i++){
+            char operator=op[calcIndex][i];
+            while(opList.size()!=0){
+                int index=opList.indexOf(operator);
+                if(index==-1) break;
+                else{
+                    switch(operator){
+                        case '*':
+                            number.add(index,number.get(index)*number.get(index+1));
+                            break;
+                        case '+':
+                            number.add(index,number.get(index)+number.get(index+1));
+                            break;
+                        case '-':
+                            number.add(index,number.get(index)-number.get(index+1));
+                            break;
+                    }
+                    number.remove(index+1);number.remove(index+1);
+                    opList.remove(index);
+                }
+            }
+        }
+        max=Math.max(max,Math.abs(number.get(0)));
+
+    }
+}
