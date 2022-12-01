@@ -1,0 +1,42 @@
+import java.util.*;
+
+class Solution {
+    public int solution(int[] queue1, int[] queue2) {
+        int answer = 0;
+        //절반 구하기 && 큐에 집어넣기
+        Queue<Integer> q1=new LinkedList<>();
+        Queue<Integer> q2=new LinkedList<>();
+        long q1Sum=0;
+        long q2Sum=0;
+
+        for(int i=0;i<queue1.length;i++){
+            q1.offer(queue1[i]);
+            q2.offer(queue2[i]);
+            q1Sum+=queue1[i];
+            q2Sum+=queue2[i];
+        }
+
+        //큐 검샇
+        while(q1Sum!=q2Sum){
+            answer++;
+            if(q1Sum<q2Sum){
+                int pollQueue=q2.poll();
+                q1.offer(pollQueue);
+                q2Sum-=pollQueue;
+                q1Sum+=pollQueue;
+            }else{
+                int pollQueue=q1.poll();
+                q2.offer(pollQueue);
+                q1Sum-=pollQueue;
+                q2Sum+=pollQueue;
+            }
+            if(answer>(q1.size()+q2.size())*2)
+            {
+                answer=-1;
+                break;
+            }
+        }
+
+        return answer;
+    }
+}
