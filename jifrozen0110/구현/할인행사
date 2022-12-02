@@ -1,0 +1,47 @@
+import java.util.*;
+class Solution {
+    static HashMap<String, Integer> needGoods=new HashMap<>();
+    static HashMap<String, Integer> existGoods=new HashMap<>();
+    private boolean checkGoods(){
+        for(String need:needGoods.keySet()){
+            int n=needGoods.get(need);
+            int e=existGoods.getOrDefault(need,0);
+            if(n!=e){
+                return false;
+            }
+        }
+        return true;
+    }
+    public int solution(String[] want, int[] number, String[] discount) {
+        int answer = 0;
+
+        for(int j=0;j<want.length;j++){
+            needGoods.put(want[j],number[j]);
+        }
+
+        for(int i=0;i<discount.length;i++){
+            String discountGoods=discount[i];
+            if(needGoods.containsKey(discountGoods)){
+                existGoods.put(discountGoods,existGoods.getOrDefault(discountGoods,0)+1);
+            }
+            if(i==9){
+                if(checkGoods()){
+                    answer++;
+                }
+            }
+
+            if(i>9){
+                if(needGoods.containsKey(discount[i-10])){
+                    existGoods.put(discount[i-10],existGoods.getOrDefault(discount[i-10],1)-1);
+                }
+
+                if(checkGoods()){
+                    answer++;
+                }
+            }
+
+        }
+
+        return answer;
+    }
+}
