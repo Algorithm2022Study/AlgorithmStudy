@@ -1,0 +1,18 @@
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        int[] answer = new int[2];
+        int sum=brown+yellow;
+        for(int i=3;i<sum;i++){
+            if(sum%i==0&&sum/i>=3){
+                int col=Math.max(i,sum/i);
+                int row=Math.min(i,sum/i);
+                if((col-2)*(row-2)==yellow){
+                    answer[0]=col;
+                    answer[1]=row;
+                    break;
+                }
+            }
+        }
+        return answer;
+    }
+}
