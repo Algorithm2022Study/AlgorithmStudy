@@ -1,0 +1,44 @@
+import java.util.*;
+class Solution {
+    public int[] solution(String[] operations) {
+        int[] answer;
+        PriorityQueue<Integer> maxPq=new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> minPq=new PriorityQueue<>();
+        int size=0;
+        ArrayList<Integer> ans=new ArrayList<>();
+        StringTokenizer st;
+        for(String operation:operations){
+            st=new StringTokenizer(operation);
+            String op=st.nextToken();
+            int num=Integer.parseInt(st.nextToken());
+            if(op.equals("I")){
+                if(size==0) {
+                    minPq.clear();
+                    maxPq.clear();
+                }
+                maxPq.offer(num);
+                minPq.offer(num);
+                size++;
+            }else{
+                if(size==0) {
+                    continue;}
+                if(num==1){
+                    maxPq.poll();
+                }else{
+                    minPq.poll();
+                }
+                size--;
+            }
+        }
+        answer=new int[2];
+
+        if(size==0){
+            answer[0]=0; answer[1]=0;
+        }else{
+            answer[0]=maxPq.poll(); answer[1]=minPq.poll();
+        }
+
+
+        return answer;
+    }
+}
