@@ -1,0 +1,62 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class practice {
+
+	public static void main(String[] args) throws IOException{
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st=new StringTokenizer(br.readLine());
+
+		int N=Integer.parseInt(st.nextToken());
+		int M=Integer.parseInt(st.nextToken());
+		int K=Integer.parseInt(st.nextToken());
+		int X=Integer.parseInt(st.nextToken());
+
+		ArrayList<ArrayList<Integer>> arr=new ArrayList<ArrayList<Integer>>();
+		for(int i=0;i<N+1;i++){
+			arr.add(new ArrayList<>());
+		}
+
+		for(int i=0;i<M;i++){
+			st=new StringTokenizer(br.readLine());
+			int a=Integer.parseInt(st.nextToken());
+			int b=Integer.parseInt(st.nextToken());
+			arr.get(a).add(b);
+		}
+
+		Queue<Integer> pq=new LinkedList<>();
+		int[] visited=new int[N+1];
+		pq.offer(X);
+		visited[X]=1;
+		while(!pq.isEmpty()){
+			int num=pq.poll();
+			for(int i=0;i<arr.get(num).size();i++){
+				if(visited[arr.get(num).get(i)]==0) {
+					pq.offer(arr.get(num).get(i));
+					visited[arr.get(num).get(i)] = visited[num] + 1;
+				}
+			}
+		}
+		StringBuilder sb=new StringBuilder();
+		boolean flag=false;
+		for(int i=1;i<N+1;i++){
+			if(visited[i]==K+1){
+				flag=true;
+				sb.append(i+"\n");
+			}
+		}
+
+		if(!flag){
+			sb.append(-1);
+		}
+
+		System.out.print(sb.toString());
+
+	}
+}
