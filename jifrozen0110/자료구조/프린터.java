@@ -1,43 +1,38 @@
-package 자료구조;
-
 import java.util.*;
-
 class Solution {
-    static class Node {
+    static class Node{
         int value;
         int index;
 
-        public Node(int value, int index) {
-            this.value = value;
-            this.index = index;
+        public Node(int index,int value){
+            this.index=index;
+            this.value=value;
         }
-    }
 
+    }
     public int solution(int[] priorities, int location) {
         int answer = 0;
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
+        Queue<Node> q=new LinkedList<>();
 
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
-
-        Queue<Node> q = new LinkedList<>();
-
-        for (int i = 0; i < priorities.length; i++) {
+        for(int i=0;i<priorities.length;i++){
             pq.add(priorities[i]);
-            q.add(new Node(priorities[i], i));
+            q.add(new Node(i,priorities[i]));
         }
-
-        while (true) {
-            int pqNode = pq.peek();
-            Node qNode = q.poll();
-            if (pqNode == qNode.value) {
-                answer++;
-                if (qNode.index == location)
+        int dist=0;
+        while(!pq.isEmpty()){
+            if(pq.peek()==q.peek().value){
+                dist++;
+                if(q.peek().index==location){
+                    answer=dist;
                     break;
+                }
                 pq.poll();
-            } else {
-                q.add(qNode);
+                q.poll();
+            }else{
+                q.offer(q.poll());
             }
         }
-
         return answer;
     }
 }
