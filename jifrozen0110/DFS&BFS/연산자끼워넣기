@@ -1,0 +1,55 @@
+package DFS_BFS;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class practice {
+	public static int maxResult=(int)-1e9;
+	public static int minResult=(int)1e9;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		int[] operator=new int[4];
+		int N = Integer.parseInt(br.readLine());
+		boolean[] visited=new boolean[N];
+		int[] num=new int[N];
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for(int i=0;i<N;i++) {
+			num[i]=Integer.parseInt(st.nextToken());
+		}
+		st = new StringTokenizer(br.readLine());
+		for(int i=0;i<4;i++){
+			operator[i]=Integer.parseInt(st.nextToken());
+		}
+		visited[0]=true;
+		DFS(N,1,operator,num,visited,num[0]);
+		System.out.println(maxResult);
+		System.out.println(minResult);
+
+	}
+	public static void DFS(int n,int k,int[] operator,int[] num,boolean visited[],int sum){
+		if(n==k){
+			maxResult=Math.max(maxResult,sum);
+			minResult=Math.min(minResult,sum);
+			return;
+		}
+		for(int j=0;j<4;j++) {
+			if (operator[j]-1 >= 0) {
+				operator[j] -= 1;
+				if(j==0){
+					DFS(n, k+1, operator,num,visited, sum+num[k]);
+				}else if(j==1){
+					DFS(n, k+1, operator,num,visited, sum-num[k]);
+				}else if(j==2){
+					DFS(n, k+1, operator,num,visited, sum*num[k]);
+				}else{
+					DFS(n, k+1, operator,num,visited, sum/num[k]);
+				}
+				operator[j] += 1;
+			}
+		}
+	}
+}
