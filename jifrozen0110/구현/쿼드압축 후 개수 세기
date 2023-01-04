@@ -1,0 +1,28 @@
+class Solution {
+    static int[] answer=new int[2];
+    public int[] solution(int[][] arr) {
+        divide(arr,0,0,arr.length);
+        return answer;
+    }
+    public static boolean check(int[][] arr,int x,int y,int size){
+        for(int i=x;i<x+size;i++){
+            for(int j=y;j<y+size;j++){
+                if(arr[x][y]!=arr[i][j]) return false;
+            }
+        }
+        return true;
+    }
+    public static void divide(int[][] arr,int x,int y,int size){
+        if(check(arr,x,y,size)) {answer[arr[x][y]]++; return;}
+
+        divide(arr,x,y,size/2);
+        divide(arr,x+size/2,y,size/2);
+
+        divide(arr,x,y+size/2,size/2);
+
+        divide(arr,x+size/2,y+size/2,size/2);
+
+
+
+    }
+}
