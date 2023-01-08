@@ -1,37 +1,35 @@
 import java.util.*;
-
 class Solution {
     public int[] solution(int[] prices) {
         int[] answer = new int[prices.length];
-        Queue<Integer> q=new LinkedList<>();
+        ArrayList<Integer> arr=new ArrayList<>();
 
+        Queue<Integer> q=new LinkedList<>();
         for(int i=0;i<prices.length;i++){
             q.offer(prices[i]);
         }
 
-        ArrayList<Integer> arr=new ArrayList<>();
-
         while(!q.isEmpty()){
-            int n=q.poll();
-            int time=0;
+            int num=q.poll();
+            int sec=0;
             if(q.isEmpty()){
-                arr.add(0); break;
+                arr.add(0);
+                break;
             }
             Iterator<Integer> iter=q.iterator();
             while(iter.hasNext()){
-                int now=iter.next();
-                if(n>now){
-                    time++;
+                int nextNum=iter.next();
+                if(nextNum>=num){
+                    sec++;
+                }else{
+                    sec++;
                     break;
                 }
-                time++;
             }
-            arr.add(time);
+            arr.add(sec);
         }
 
-        for(int i=0;i<arr.size();i++){
+        for(int i=0;i<prices.length;i++){
             answer[i]=arr.get(i);
         }
         return answer;
-    }
-}
