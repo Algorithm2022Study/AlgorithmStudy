@@ -1,0 +1,49 @@
+import java.util.*;
+class Solution {
+    class Album implements Comparable<Album>{
+        int index;
+        int plays;
+        String genre;
+        public Album(int index,int plays,String genre){
+            this.index=index;
+            this.plays=plays;
+            this.genre=genre;
+        }
+
+        @Override
+        public int compareTo(Album other){
+            if(this.plays==other.plays){
+                return this.index-other.index;
+            }
+            return other.plays-this.plays;
+        }
+    }
+    public int[] solution(String[] genres, int[] plays) {
+        ArrayList<Integer> answer=new ArrayList<>();
+
+        HashMap<String,Integer> map=new HashMap<>();
+        ArrayList<Album> albums=new ArrayList<>();
+
+        for(int i=0;i<genres.length;i++){
+            map.put(genres[i],map.getOrDefault(genres[i],0)+plays[i]);
+            albums.add(new Album(i,plays[i],genres[i]));
+        }
+
+        ArrayList<String> keyArr=new ArrayList(map.keySet());
+        Collections.sort(albums);
+        Collections.sort(keyArr,(s1,s2)->map.get(s2)-map.get(s1));
+
+        for(String key:keyArr){
+            int check=0;
+            for(int i=0;i<albums.size();i++){
+                if(key.equals(albums.get(i).genre)){
+                    if(check>=2) break;
+                    check++;
+                    answer.add(albums.get(i).index);
+                }
+            }
+        }
+
+        return answer.stream().mapToInt(i -> i).toArray();
+    }
+}
