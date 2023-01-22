@@ -1,0 +1,20 @@
+class Solution {
+    public int solution(int n, int[] stations, int w) {
+        int answer = 0;
+
+        int position=1;
+        int station=0;
+        while(position<=n){
+            if(station<stations.length&&position>=stations[station]-w){
+                position=stations[station]+w+1;
+                station++;
+            }
+            else{
+                answer+=1;
+                position+=(2*w+1);
+
+            }
+        }
+        return answer;
+    }
+}
