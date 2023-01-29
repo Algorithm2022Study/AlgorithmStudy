@@ -1,0 +1,38 @@
+import java.util.*;
+class Solution {
+    public int[] solution(String[] id_list, String[] report, int k) {
+        int idLen=id_list.length;
+        int[] answer = new int[idLen];
+        //indexOf 사용하기 위해 ArrayList 사용
+        ArrayList<String> idArr=new ArrayList<>();
+        for(int i=0;i<idLen;i++){
+            idArr.add(id_list[i]);
+        }
+        //신고자 신고 당한 자 2차원 배열로 관리
+        int[][] map=new int[idLen][idLen];
+        //신고 횟수 관리
+        HashMap<String,Integer> hash=new HashMap<>();
+
+        for(int i=0;i<report.length;i++){
+            String[] strs=report[i].split(" ");
+            //신고한적 있으면 지나감
+            if(map[idArr.indexOf(strs[0])][idArr.indexOf(strs[1])]==1){
+                continue;
+            }
+            //신고횟수 업데이트
+            map[idArr.indexOf(strs[0])][idArr.indexOf(strs[1])]=1;
+            hash.put(strs[1],hash.getOrDefault(strs[1],0)+1);
+        }
+        //k번 이상 신고된 유저 검사
+        for(String key:hash.keySet()){
+            if(hash.get(key)>=k){
+                //정지 메일 전송 이력
+                for(int i=0;i<idLen;i++){
+                    answer[i]+=map[i][idArr.indexOf(key)];
+                }
+            }
+        }
+
+        return answer;
+    }
+}
