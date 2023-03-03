@@ -1,0 +1,41 @@
+import java.util.*;
+class Solution {
+    static HashSet<HashSet<String>> answer=new HashSet<>();
+    public int solution(String[] user_id, String[] banned_id) {
+
+        DFS(new LinkedHashSet<String>(),user_id,banned_id);
+        return answer.size();
+    }
+    //user_id에서 banned_id만큼 조합 만들기 -> DFS
+    public static void DFS(HashSet<String> set,String[] user_id,String[] banned_id){
+        if(set.size()==banned_id.length){
+            if(isBanned(set,banned_id)) answer.add(new HashSet<>(set));
+            return;
+        }
+        for(int i=0;i<user_id.length;i++){
+            if(set.add(user_id[i])){
+                DFS(set,user_id,banned_id);
+                set.remove(user_id[i]);
+            }
+        }
+    }
+    //해당 조합이 banned_id에 적합한지 살펴보기
+    public static boolean isBanned(HashSet<String> set, String[] banned_id){
+        int idx=0;
+        for(String str:set){
+            String bannedId=banned_id[idx++];
+            if(str.length()!=bannedId.length()){
+                return false;
+            }
+            for(int i=0;i<bannedId.length();i++){
+                if(bannedId.charAt(i)=='*'){
+                    continue;
+                }
+                if(str.charAt(i)!=bannedId.charAt(i)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
