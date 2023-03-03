@@ -1,3 +1,4 @@
+# 재복습
 def solution(number, k):
     answer = []
 
